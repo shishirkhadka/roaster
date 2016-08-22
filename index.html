@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Roaster by forge</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Roaster</h1>
+          <h2>A Java Parser library that allows easy parsing and formatting of Java source files</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/forge/roaster/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/forge/roaster/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/forge/roaster" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a id="roaster---the-only-java-source-parser-library-youll-ever-need" class="anchor" href="#roaster---the-only-java-source-parser-library-youll-ever-need" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Roaster - The only Java source parser library you'll ever need</h1>
+
+<p>Roaster (formerly known as java-parser) is a library that allows easy parsing and formatting of java source files. 
+Roaster introduces a fluent interface to manipulate Java source files, like adding fields, methods, annotations and so on.</p>
+
+<h1>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h1>
+
+<ul>
+<li>If you are using Maven, add the following dependencies to your project: </li>
+</ul>
+
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+  &lt;<span class="pl-ent">groupId</span>&gt;org.jboss.forge.roaster&lt;/<span class="pl-ent">groupId</span>&gt;
+  &lt;<span class="pl-ent">artifactId</span>&gt;roaster-api&lt;/<span class="pl-ent">artifactId</span>&gt;
+  &lt;<span class="pl-ent">version</span>&gt;${version.roaster}&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;
+&lt;<span class="pl-ent">dependency</span>&gt;
+  &lt;<span class="pl-ent">groupId</span>&gt;org.jboss.forge.roaster&lt;/<span class="pl-ent">groupId</span>&gt;
+  &lt;<span class="pl-ent">artifactId</span>&gt;roaster-jdt&lt;/<span class="pl-ent">artifactId</span>&gt;
+  &lt;<span class="pl-ent">version</span>&gt;${version.roaster}&lt;/<span class="pl-ent">version</span>&gt;
+  &lt;<span class="pl-ent">scope</span>&gt;runtime&lt;/<span class="pl-ent">scope</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<ul>
+<li>Otherwise, download and extract (or build from sources) the most recent <a href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22roaster-distribution%22">distribution</a> containing the Roaster distribution and command line tools</li>
+</ul>
+
+<h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h1>
+
+<h2>
+<a id="cli" class="anchor" href="#cli" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CLI</h2>
+
+<p>Execute roaster by running the following script (add these to your $PATH for convenience):</p>
+
+<pre><code>bin/roaster     (Unix/Linux/OSX)
+bin/roaster.bat (Windows)
+</code></pre>
+
+<p>Options described here:</p>
+
+<pre><code>$ roaster -h
+
+Usage: roaster [OPTION]... FILES ... 
+The fastest way to build applications, share your software, and enjoy doing it. 
+
+-c, --config [CONFIG_FILE]
+     specify the path to the Eclipse code format profile (usually found at '$PROJECT/.settings/org.eclipse.jdt.core.prefs') 
+
+-r, --recursive
+     format files in found sub-directories recursively 
+
+FILES... 
+     specify one or more space-separated files or directories to format 
+
+-h, --help
+     display this help and exit 
+</code></pre>
+
+<h2>
+<a id="java-parser-api" class="anchor" href="#java-parser-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Java Parser API</h2>
+
+<p>Example:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">Roaster</span><span class="pl-k">.</span>parse(<span class="pl-smi">JavaClassSource</span><span class="pl-k">.</span>class, <span class="pl-s"><span class="pl-pds">"</span>public class HelloWorld {}<span class="pl-pds">"</span></span>);</pre></div>
+
+<h2>
+<a id="java-source-code-generation-api" class="anchor" href="#java-source-code-generation-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Java Source Code Generation API</h2>
+
+<p>Roaster provides a fluent API to generate java classes. Here an example:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">final</span> <span class="pl-smi">JavaClassSource</span> javaClass <span class="pl-k">=</span> <span class="pl-smi">Roaster</span><span class="pl-k">.</span>create(<span class="pl-smi">JavaClassSource</span><span class="pl-k">.</span>class);
+javaClass<span class="pl-k">.</span>setPackage(<span class="pl-s"><span class="pl-pds">"</span>com.company.example<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>setName(<span class="pl-s"><span class="pl-pds">"</span>Person<span class="pl-pds">"</span></span>);
+
+javaClass<span class="pl-k">.</span>addInterface(<span class="pl-smi">Serializable</span><span class="pl-k">.</span>class);
+javaClass<span class="pl-k">.</span>addField()
+  .setName(<span class="pl-s"><span class="pl-pds">"</span>serialVersionUID<span class="pl-pds">"</span></span>)
+  .setType(<span class="pl-s"><span class="pl-pds">"</span>long<span class="pl-pds">"</span></span>)
+  .setLiteralInitializer(<span class="pl-s"><span class="pl-pds">"</span>1L<span class="pl-pds">"</span></span>)
+  .setPrivate()
+  .setStatic(<span class="pl-c1">true</span>)
+  .setFinal(<span class="pl-c1">true</span>);
+
+javaClass<span class="pl-k">.</span>addProperty(<span class="pl-smi">Integer</span><span class="pl-k">.</span>class, <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>setMutable(<span class="pl-c1">false</span>);
+javaClass<span class="pl-k">.</span>addProperty(<span class="pl-smi">String</span><span class="pl-k">.</span>class, <span class="pl-s"><span class="pl-pds">"</span>firstName<span class="pl-pds">"</span></span>);
+javaClass<span class="pl-k">.</span>addProperty(<span class="pl-s"><span class="pl-pds">"</span>String<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>lastName<span class="pl-pds">"</span></span>);
+
+javaClass<span class="pl-k">.</span>addMethod()
+  .setConstructor(<span class="pl-c1">true</span>)
+  .setPublic()
+  .setBody(<span class="pl-s"><span class="pl-pds">"</span>this.id = id;<span class="pl-pds">"</span></span>)
+  .addParameter(<span class="pl-smi">Integer</span><span class="pl-k">.</span>class, <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>);</pre></div>
+
+<p>Will produce:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">package</span> <span class="pl-smi">com.company.example</span>;
+
+<span class="pl-k">import</span> <span class="pl-smi">java.io.Serializable</span>;
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Person</span> <span class="pl-k">implements</span> <span class="pl-e">Serializable</span> {
+
+   <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">final</span> <span class="pl-k">long</span> serialVersionUID <span class="pl-k">=</span> <span class="pl-c1">1L</span>;
+   <span class="pl-k">private</span> <span class="pl-k">final</span> <span class="pl-smi">Integer</span> id;
+   <span class="pl-k">private</span> <span class="pl-smi">String</span> firstName;
+   <span class="pl-k">private</span> <span class="pl-smi">String</span> lastName;
+
+   <span class="pl-k">public</span> <span class="pl-smi">Integer</span> <span class="pl-en">getId</span>() {
+      <span class="pl-k">return</span> id;
+   }
+
+   <span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">getFirstName</span>() {
+      <span class="pl-k">return</span> firstName;
+   }
+
+   <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">setFirstName</span>(<span class="pl-smi">String</span> <span class="pl-v">firstName</span>) {
+      <span class="pl-v">this</span><span class="pl-k">.</span>firstName <span class="pl-k">=</span> firstName;
+   }
+
+   <span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">getLastName</span>() {
+      <span class="pl-k">return</span> lastName;
+   }
+
+   <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">setLastName</span>(<span class="pl-smi">String</span> <span class="pl-v">lastName</span>) {
+      <span class="pl-v">this</span><span class="pl-k">.</span>lastName <span class="pl-k">=</span> lastName;
+   }
+
+   <span class="pl-k">public</span> <span class="pl-en">Person</span>(<span class="pl-smi">Integer</span> <span class="pl-v">id</span>) {
+      <span class="pl-v">this</span><span class="pl-k">.</span>id <span class="pl-k">=</span> id;
+   }
+}</pre></div>
+
+<h2>
+<a id="java-source-code-modification-api" class="anchor" href="#java-source-code-modification-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Java Source Code Modification API</h2>
+
+<p>Of course it is possible to mix both approaches (parser and writer) to modify Java code programmatically:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">JavaClassSource</span> javaClass <span class="pl-k">=</span> 
+  <span class="pl-smi">Roaster</span><span class="pl-k">.</span>parse(<span class="pl-smi">JavaClassSource</span><span class="pl-k">.</span>class, <span class="pl-s"><span class="pl-pds">"</span>public class SomeClass {}<span class="pl-pds">"</span></span>);
+javaClass<span class="pl-k">.</span>addMethod()
+  .setPublic()
+  .setStatic(<span class="pl-c1">true</span>)
+  .setName(<span class="pl-s"><span class="pl-pds">"</span>main<span class="pl-pds">"</span></span>)
+  .setReturnTypeVoid()
+  .setBody(<span class="pl-s"><span class="pl-pds">"</span>System.out.println(<span class="pl-cce">\"</span>Hello World<span class="pl-cce">\"</span>);<span class="pl-pds">"</span></span>)
+  .addParameter(<span class="pl-s"><span class="pl-pds">"</span>java.lang.String[]<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>args<span class="pl-pds">"</span></span>);
+<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(javaClass);</pre></div>
+
+<h2>
+<a id="javadoc-creation-and-parsing" class="anchor" href="#javadoc-creation-and-parsing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>JavaDoc creation and parsing</h2>
+
+<p>Here is an example on how to add JavaDoc to a class:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">JavaClassSource</span> javaClass <span class="pl-k">=</span> 
+  <span class="pl-smi">Roaster</span><span class="pl-k">.</span>parse(<span class="pl-smi">JavaClassSource</span><span class="pl-k">.</span>class, <span class="pl-s"><span class="pl-pds">"</span>public class SomeClass {}<span class="pl-pds">"</span></span>);
+<span class="pl-smi">JavaDocSource</span> javaDoc <span class="pl-k">=</span> javaClass<span class="pl-k">.</span>getJavaDoc();
+
+javaDoc<span class="pl-k">.</span>setFullText(<span class="pl-s"><span class="pl-pds">"</span>Full class documentation<span class="pl-pds">"</span></span>);
+<span class="pl-c">// or </span>
+javaDoc<span class="pl-k">.</span>setText(<span class="pl-s"><span class="pl-pds">"</span>Class documentation text<span class="pl-pds">"</span></span>);
+javaDoc<span class="pl-k">.</span>addTagValue(<span class="pl-s"><span class="pl-pds">"</span>@author<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>George Gastaldi<span class="pl-pds">"</span></span>);
+
+<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(javaClass);</pre></div>
+
+<h2>
+<a id="formatting-the-java-source-code" class="anchor" href="#formatting-the-java-source-code" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Formatting the Java Source Code</h2>
+
+<p>Roaster formats the Java Source Code by calling the format() method:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">String</span> javaCode <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>public class MyClass{ private String field;}<span class="pl-pds">"</span></span>;
+<span class="pl-smi">String</span> formattedCode <span class="pl-k">=</span> <span class="pl-smi">Roaster</span><span class="pl-k">.</span>format(javaCode);
+<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(formattedCode);</pre></div>
+
+<h2>
+<a id="parsing-the-java-unit-" class="anchor" href="#parsing-the-java-unit-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Parsing the java unit </h2>
+
+<p>The link:<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-7.html#jls-7.3%5BJava">http://docs.oracle.com/javase/specs/jls/se7/html/jls-7.html#jls-7.3[Java</a> Language Specification] allows you to define multiple classes in the same .java file. Roaster supports parsing the entire unit by calling the parseUnit() method:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">String</span> javaCode <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>public class MyClass{ private String field;} public class AnotherClass {}<span class="pl-pds">"</span></span>;
+
+<span class="pl-smi">JavaUnit</span> unit <span class="pl-k">=</span> <span class="pl-smi">Roaster</span><span class="pl-k">.</span>parseUnit(javaCode);
+
+<span class="pl-smi">JavaClassSource</span> myClass <span class="pl-k">=</span> unit<span class="pl-k">.</span>getGoverningType();
+<span class="pl-smi">JavaClassSource</span> anotherClass <span class="pl-k">=</span> (<span class="pl-smi">JavaClassSource</span>) unit<span class="pl-k">.</span>getTopLevelTypes()<span class="pl-k">.</span>get(<span class="pl-c1">1</span>);</pre></div>
+
+<h1>
+<a id="issue-tracker" class="anchor" href="#issue-tracker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Issue tracker</h1>
+
+<p><a href="https://issues.jboss.org/browse/ROASTER">ROASTER on JBossDeveloper</a>. You might need to log in, in order to view the issues.</p>
+
+<h1>
+<a id="get-in-touch" class="anchor" href="#get-in-touch" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Get in touch</h1>
+
+<p>Roaster uses the same forum and mailing lists as the <a href="http://forge.jboss.org/">JBoss Forge</a> project. See the <a href="http://forge.jboss.org/community">JBoss Forge Community</a> page.</p>
+
+<ul>
+<li><a href="https://developer.jboss.org/en/forge">User forums</a></li>
+<li><a href="https://developer.jboss.org/en/forge/dev">Developer forums</a></li>
+</ul>
+
+<h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h1>
+
+<p><a href="http://www.eclipse.org/legal/epl-v10.html">Eclipse Public License - v 1.0</a></p>
+        </section>
+
+        <footer>
+          Roaster is maintained by <a href="https://github.com/forge">forge</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
