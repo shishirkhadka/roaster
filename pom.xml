@@ -126,8 +126,3 @@
     </plugins>
   </build>
 </project>
-
-<properties>
-  <version.roaster>2.21.0.Final</version.roaster>
-</properties>
-
